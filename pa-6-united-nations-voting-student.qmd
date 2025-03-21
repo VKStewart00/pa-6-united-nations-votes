@@ -100,6 +100,8 @@ unvotes <- read_csv("data/unvotes.csv")
 ```{r}
 #| label: read in roll calls
 #edit to read in roll_calls
+
+
 roll_calls <- read_csv("data/roll_calls.csv")
 ```
 
@@ -114,6 +116,7 @@ roll_calls <- read_csv("data/roll_calls.csv")
 |issue      |integer   | Descriptive issue name |
 
 ```{r}
+#|label: Read in issues.csv
 #edit to read in issues
 #edit to read in roll_calls
 roll_calls <- read_csv("data/issues.csv")
@@ -137,6 +140,8 @@ The first data set, `unvotes` contains data on the `rcid` which is the roll call
 Comment on the following code, what is happening in each line?  One way to approach seeing what each line does is to highlight the code from before the `pipe` of that line up to the data `unvotes` and use `CTRL + ENTER` to run just the highlighted lines.  
 
 ```{r}
+#|label: G7-voting-graph
+
 unvotes |> 
   count(country, vote) |> #total count of votes per country
   group_by(country) |> #separate by countries
@@ -171,20 +176,23 @@ unvotes |>
 
 ### Roll Calls
 
-The second data set, `roll_calls` has more information on the type of vote, the importance, whether it was a resolution, and date of the vote.  What does eh following code do?
+The second data set, `roll_calls` has more information on the type of vote, the importance, whether it was a resolution, and date of the vote.  What does the following code do?
 
 ```{r}
+#|label: Roll call unique inputs
 roll_calls |> 
   distinct(short)
 ```
 
-> Description of code results
-
+> Unique inputs of short descriptions on what UN members are voting on.
 
 
 We can use the individual data for `roll_calls` to look at the number of votes per year over time.
 
 ```{r}
+#|label: Figure for roll call data
+
+
 roll_calls |> 
   mutate(year = lubridate::year(date)) |> #extracts the year from the date value and creates a new `year` column
   count(year) |> #counts how many votes there were per year assuming each line is an single voting instance
@@ -199,20 +207,21 @@ roll_calls |>
 
 What information is missing from the above graphic that might be useful in understanding the issues the UN commonly votes on?
 
-> Insert Answer Here
-
+> Separate by country, and adding if the voting was deemed important by the U.S. State Department.
 
 
 We could try and look at the short descriptions, `short`, for each vote with the following code. 
 ```{r}
+#|label: Adds counts to roll_call data
+
+
 roll_calls |> 
   count(short)
 ```
 
 Does the above information help us understand the voting issues of the UN over time? Explain.
 
-> Insert your answer here
-
+> The amount of times an issue has been repeatedly voted on.  
 
 
 <!-- Swap roles -- Developer becomes Coder, Coder becomes Developer! -->
