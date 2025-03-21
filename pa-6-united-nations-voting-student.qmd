@@ -119,7 +119,7 @@ roll_calls <- read_csv("data/roll_calls.csv")
 #|label: Read in issues.csv
 #edit to read in issues
 #edit to read in roll_calls
-roll_calls <- read_csv("data/issues.csv")
+issues <- read_csv("data/issues.csv")
 ```
 
 
@@ -231,6 +231,8 @@ Does the above information help us understand the voting issues of the UN over t
 Finally we have the `issues` data which provides a more general description for each vote on specific issues.  Note that not all issues are included in the data set, just the ones related to the 6 issues below:
 
 ```{r}
+#| label: count-of-issues
+
 issues |> 
   count(issue)
 ```
@@ -249,7 +251,7 @@ dim(roll_calls)
 ```
 
 
-> Insert Answer Here
+> Roll_calls df has more number of rows compared to isses df. This means we may lose or add more rows based on how we join our data. 
 
 
 
@@ -257,27 +259,27 @@ Now let's try joining the `roll_calls` with the `issues` data.  Compare the foll
 
 ```{r}
 roll_calls |> 
-  left_join(issues, by = "rcid") #description of join
+  left_join(issues, by = "rcid") #matching the rcid column from both df; more rows
 ```
 
 ```{r}
 roll_calls |> 
-  right_join(issues, by = "rcid") #description of join
+  right_join(issues, by = "rcid") #matching the rcid column from both df; less rows
 ```
 
 ```{r}
 roll_calls |> 
-  full_join(issues, by = "rcid") #description of join
+  full_join(issues, by = "rcid") #keeps all the rows (whether it matches or not)and adds more rows
 ```
 
 ```{r}
 roll_calls |> 
-  inner_join(issues, by = "rcid") #description of join
+  inner_join(issues, by = "rcid") #only keeps rows that match; less rows
 ```
 
 **If we are only interested in retaining the records associated with the `issues` labeled in our data, which join(s) should we use?**
 
-> Insert answer here
+> Inner join and right join. 
 
 
 
